@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>UUID Generator</title>
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+	<ul id="uuids">
+	</ul>
+	<form id="generate" action="#" >
+		Number of UUIDs: <input type="text" id="count" value="1" />
+		<input type="submit" value="Generate" />
+	</form>
+	<script>
+		$("#generate").submit(function(event) {
+			$.post("uuids", { n: $("#count").val() }).done(function(data) {
+				$("#uuids").html("");
+				data.forEach(function(uuid) {
+					$("#uuids").append("<li>" + uuid + "</li>");
+				});
+			});
+			return false;
+		});
+	</script>
+</body>
+</html>
