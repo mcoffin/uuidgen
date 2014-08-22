@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -45,6 +46,9 @@ func Generate(res http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+	bind := flag.String("http", ":8080", "http binding")
+	flag.Parse()
+
 	fs := http.FileServer(http.Dir("static"))
 
 	r := mux.NewRouter()
@@ -54,5 +58,5 @@ func main() {
 	n := negroni.Classic()
 	n.UseHandler(r)
 	http.Handle("/", n)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(*bind, nil)
 }
